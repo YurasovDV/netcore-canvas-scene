@@ -1,9 +1,9 @@
 export class Circle {
 
-  constructor(public ID: number,
-    public Name: string,
-    public Width: number,
-    public Height: number,
-    public Depth: number) { }
+  constructor(public id: number,
+    public name: string,
+    public width: number,
+    public height: number,
+    public depth: number) { }
 
 }
