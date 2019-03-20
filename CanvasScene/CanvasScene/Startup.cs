@@ -16,12 +16,12 @@ namespace CanvasScene
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            CompositionRoot.ConfigureServices(services);
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
@@ -52,9 +52,6 @@ namespace CanvasScene
 
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
-
                 spa.Options.SourcePath = "ClientApp";
 
                 if (env.IsDevelopment())
@@ -62,6 +59,15 @@ namespace CanvasScene
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            if (env.IsDevelopment())
+            {
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    serviceScope.ServiceProvider.GetService<DAL.CirclesContext>()
+                        .Database.EnsureCreated();
+                }
+            }
         }
     }
 }
