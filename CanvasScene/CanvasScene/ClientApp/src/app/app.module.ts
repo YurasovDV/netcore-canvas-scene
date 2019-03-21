@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { GridModule } from '@progress/kendo-angular-grid';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { KonvaModule } from 'ng2-konva';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       { path: '', component: HomeComponent, pathMatch: 'full' },
     ]),
     GridModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    KonvaModule
   ],
   providers: [CirclesService],
   bootstrap: [AppComponent]

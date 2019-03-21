@@ -1,26 +1,28 @@
 
-<div style="width: 500px; height: 500px; ">
-  <div style="margin: 100px auto 0px auto; text-align: center;">
+<div style="width: 500px; height: 500px; margin: 0 auto; ">
 
+  <kendo-grid [data]="figures" [height]="400">
+    <kendo-grid-column field="id" title="ID" width="40">
+    </kendo-grid-column>
+    <kendo-grid-column field="name" title="Name" width="250">
+    </kendo-grid-column>
+    <kendo-grid-column field="width" title="Width">
+    </kendo-grid-column>
+    <!--      <kendo-grid-column field="Discontinued" title="Discontinued" width="120">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <input type="checkbox" [checked]="dataItem.Discontinued" disabled />
+      </ng-template>
+    </kendo-grid-column>-->
+  </kendo-grid>
 
-    <kendo-grid [data]="figures" [height]="410">
-      <kendo-grid-column field="id" title="ID" width="40">
-      </kendo-grid-column>
-      <kendo-grid-column field="name" title="Name" width="250">
-      </kendo-grid-column>
-      <kendo-grid-column field="width" title="Width">
-      </kendo-grid-column>
-      <!--<kendo-grid-column field="UnitPrice" title="Price" width="80">
-      </kendo-grid-column>
-      <kendo-grid-column field="UnitsInStock" title="In stock" width="80">
-      </kendo-grid-column>
-      <kendo-grid-column field="Discontinued" title="Discontinued" width="120">
-        <ng-template kendoGridCellTemplate let-dataItem>
-          <input type="checkbox" [checked]="dataItem.Discontinued" disabled />
-        </ng-template>
-      </kendo-grid-column>-->
-    </kendo-grid>
-
-  </div>
 </div>
+
+<div *ngIf="isDataAvailable" style="margin: 50px; border: 2px solid red;">
+  <ko-stage #stage [config]="configStage">
+    <ko-layer #layer>
+      <ko-circle *ngFor="let circle of circles" [config]="circle"></ko-circle>
+    </ko-layer>
+  </ko-stage>
+</div>
+
 
