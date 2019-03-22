@@ -1,14 +1,13 @@
-﻿using System;
-using CanvasScene.AppServices;
+﻿using CanvasScene.AppServices;
 using CanvasScene.DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace CanvasScene
+namespace CanvasScene.IoC
 {
     public class CompositionRoot
     {
-        internal static void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<FiguresContext>(builder =>
             {

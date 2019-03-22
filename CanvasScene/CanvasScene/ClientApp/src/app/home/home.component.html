@@ -16,7 +16,7 @@
     </kendo-grid-column>
     <kendo-grid-column field="Discontinued" title="Добавлен на сцену" width="200">
       <ng-template kendoGridCellTemplate let-dataItem>
-        <input type="checkbox" [checked]="dataItem.inCanvas" />
+        <input type="checkbox"  [(ngModel)]="dataItem.inCanvas" (change)="checkValue(dataItem)" />
       </ng-template>
     </kendo-grid-column>
   </kendo-grid>
@@ -26,7 +26,7 @@
 <div *ngIf="isDataAvailable" style="margin: 50px; border: 2px solid red;">
   <ko-stage #stage [config]="configStage">
     <ko-layer #layer>
-      <ko-circle *ngFor="let rectangle of figures" [config]="rectangle"></ko-circle>
+      <ko-regular-polygon *ngFor="let figure of figuresForCanvas" [config]="figure"></ko-regular-polygon>
     </ko-layer>
   </ko-stage>
 </div>

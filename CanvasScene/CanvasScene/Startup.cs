@@ -18,7 +18,7 @@ namespace CanvasScene
 
         public void ConfigureServices(IServiceCollection services)
         {
-            CompositionRoot.ConfigureServices(services);
+            new IoC.CompositionRoot().ConfigureServices(services);
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
