@@ -3,23 +3,21 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace CanvasScene.DAL
 {
-    public class CirclesContext : DbContext
+    public class FiguresContext : DbContext
     {
-        public CirclesContext(DbContextOptions options) : base(options)
+        public FiguresContext(DbContextOptions options) : base(options)
         {
         }
 
 
-        public DbSet<Circle> Circles { get; set; }
+        public DbSet<Figure> Figures { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new FigureEntityConfiguration());
 
-            modelBuilder.ApplyConfiguration(new CircleEntityConfiguration());
-
-            modelBuilder.Entity<Circle>().HasData(
-                new Circle()
+            modelBuilder.Entity<Figure>().HasData(
+                new Figure()
                 {
                     ID = 1,
                     Depth = 1,
@@ -28,7 +26,7 @@ namespace CanvasScene.DAL
                     Width = 10
                 },
 
-                new Circle()
+                new Figure()
                 {
                     ID = 2,
                     Depth = 2,

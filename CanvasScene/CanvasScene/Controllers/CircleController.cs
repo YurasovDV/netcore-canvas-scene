@@ -6,17 +6,17 @@ using Microsoft.AspNetCore.Mvc;
 namespace CanvasScene.Controllers
 {
     [Route("api/v1/[controller]")]
-    public class CircleController : BaseController
+    public class FigureController : BaseController
     {
-        public CircleController(ICircleService circleService) : base(circleService)
+        public FigureController(IFiguresService figuresService) : base(figuresService)
         {
         }
 
         // OData?
         [HttpGet()]
-        public async Task<IEnumerable<Circle>> Get()
+        public async Task<IEnumerable<Figure>> Get()
         {
-            return await CircleService.GetCircles();
+            return await FiguresService.GetFigures();
         }
     }
 }

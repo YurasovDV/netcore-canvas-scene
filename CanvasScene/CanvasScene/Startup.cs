@@ -64,7 +64,7 @@ namespace CanvasScene
             {
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
-                    serviceScope.ServiceProvider.GetService<DAL.CirclesContext>()
+                    serviceScope.ServiceProvider.GetService<DAL.FiguresContext>()
                         .Database.EnsureCreated();
                 }
             }

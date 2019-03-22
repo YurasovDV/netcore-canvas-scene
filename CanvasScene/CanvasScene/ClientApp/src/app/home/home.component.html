@@ -1,18 +1,24 @@
 
-<div style="width: 500px; height: 500px; margin: 0 auto; ">
+<div style="width: 900px; height: 500px; margin: 0 auto; ">
 
-  <kendo-grid [data]="figures" [height]="400">
+  <kendo-grid [data]="figuresViewForGrid" [height]="400">
     <kendo-grid-column field="id" title="ID" width="40">
     </kendo-grid-column>
-    <kendo-grid-column field="name" title="Name" width="250">
+    <kendo-grid-column field="name" title="Название" width="250">
     </kendo-grid-column>
-    <kendo-grid-column field="width" title="Width">
+    <kendo-grid-column field="width" title="Ширина">
     </kendo-grid-column>
-    <!--      <kendo-grid-column field="Discontinued" title="Discontinued" width="120">
+
+    <kendo-grid-column field="height" title="Высота">
+    </kendo-grid-column>
+
+    <kendo-grid-column field="depth" title="Глубина">
+    </kendo-grid-column>
+    <kendo-grid-column field="Discontinued" title="Добавлен на сцену" width="200">
       <ng-template kendoGridCellTemplate let-dataItem>
-        <input type="checkbox" [checked]="dataItem.Discontinued" disabled />
+        <input type="checkbox" [checked]="dataItem.inCanvas" />
       </ng-template>
-    </kendo-grid-column>-->
+    </kendo-grid-column>
   </kendo-grid>
 
 </div>
@@ -20,7 +26,7 @@
 <div *ngIf="isDataAvailable" style="margin: 50px; border: 2px solid red;">
   <ko-stage #stage [config]="configStage">
     <ko-layer #layer>
-      <ko-circle *ngFor="let circle of circles" [config]="circle"></ko-circle>
+      <ko-circle *ngFor="let rectangle of figures" [config]="rectangle"></ko-circle>
     </ko-layer>
   </ko-stage>
 </div>

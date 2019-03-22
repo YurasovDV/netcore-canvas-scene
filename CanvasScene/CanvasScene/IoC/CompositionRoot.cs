@@ -10,13 +10,13 @@ namespace CanvasScene
     {
         internal static void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<CirclesContext>(builder =>
+            services.AddDbContext<FiguresContext>(builder =>
             {
-                builder.UseInMemoryDatabase("CirclesDatabase",
+                builder.UseInMemoryDatabase("FiguresDatabase",
                     b => { });
             }, ServiceLifetime.Scoped);
 
-            services.Add(new ServiceDescriptor(typeof(ICircleService), typeof(CircleService), ServiceLifetime.Scoped));
+            services.Add(new ServiceDescriptor(typeof(IFiguresService), typeof(FiguresService), ServiceLifetime.Scoped));
         }
     }
 }

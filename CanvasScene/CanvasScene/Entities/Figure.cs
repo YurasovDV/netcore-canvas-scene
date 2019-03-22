@@ -1,6 +1,6 @@
 ﻿namespace CanvasScene
 {
-    public class Circle
+    public class Figure
     {
         public int ID { get; set; }
 

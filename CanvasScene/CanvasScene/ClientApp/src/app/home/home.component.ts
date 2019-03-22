@@ -1,12 +1,11 @@
-import { Component, OnInit, ViewChild, AfterContentInit, ViewContainerRef, ComponentFactoryResolver } from '@angular/core';
-import { CirclesService } from '../services/circles.service';
-import { GridDataResult } from '@progress/kendo-angular-grid';
+import { Component, OnInit, ViewChild} from '@angular/core';
+import { FiguresService } from '../services/figures.service';
 import { of, Observable } from 'rxjs';
-import { Circle } from '../model/circle';
-import { KonvaCircle } from '../model/konvaCircle';
+import { Figure } from '../model/figure';
+import { KonvaFigure } from '../model/konvaFigure';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { KonvaComponent } from 'ng2-konva';
-
+import { GridDataResult } from '@progress/kendo-angular-grid';
 
 @Component({
   selector: 'app-home',
@@ -14,18 +13,19 @@ import { KonvaComponent } from 'ng2-konva';
 })
 export class HomeComponent implements OnInit {
 
-  public figures: GridDataResult = null;
-
   configStage: Observable<any> = null;
 
-  public circles: Array<any> = [];
+  public figures: Array<any> = [];
+
+
+  public figuresViewForGrid: GridDataResult = null;
 
   public isDataAvailable: boolean = false;
 
   @ViewChild('stage') stage: KonvaComponent;
   @ViewChild('layer') layer: KonvaComponent;
 
-  constructor(private circleService: CirclesService) { }
+  constructor(private figuresService: FiguresService) { }
 
   ngOnInit(): void {
 
@@ -34,12 +34,13 @@ export class HomeComponent implements OnInit {
       height: 300
     });
 
-    this.circleService.getAll().subscribe(data => {
-      this.figures = data;
+    this.figuresService.getAll().subscribe(data => {
 
-      this.circles = data.data.
-        map<Circle>(i => i).
-        map((circle, index) => new BehaviorSubject(new KonvaCircle(100 * (index + 1), 100 * (index + 1), circle.height / 2, index % 2 == 0 ? "red" : "blue", "red", 4)));
+      this.figuresViewForGrid = data;
+
+      this.figures = data.data.
+        map<Figure>(i => i).
+        map((figure, index) => new BehaviorSubject(new KonvaFigure(100 * (index + 1), 100 * (index + 1), figure.height / 2, index % 2 == 0 ? "red" : "blue", "red", 4)));
         // hack: konva subscribes to new data only once
       this.isDataAvailable = true;
 

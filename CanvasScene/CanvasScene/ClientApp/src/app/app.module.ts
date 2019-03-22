@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 
-import { CirclesService } from './services/circles.service';
+import { FiguresService } from './services/figures.service';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { GridModule } from '@progress/kendo-angular-grid';
@@ -27,7 +27,7 @@ import { KonvaModule } from 'ng2-konva';
     BrowserAnimationsModule,
     KonvaModule
   ],
-  providers: [CirclesService],
+  providers: [FiguresService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

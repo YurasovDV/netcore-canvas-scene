@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CanvasScene.DAL
 {
-    public class CircleEntityConfiguration : IEntityTypeConfiguration<Circle>
+    public class FigureEntityConfiguration : IEntityTypeConfiguration<Figure>
     {
-        public void Configure(EntityTypeBuilder<Circle> builder)
+        public void Configure(EntityTypeBuilder<Figure> builder)
         {
-            builder.ToTable("Circles", "dbo");
+            builder.ToTable("Figures", "dbo");
             builder.HasKey(c => c.ID);
             builder.Property(c => c.Name).HasColumnType("nvarchar(100)");
         }

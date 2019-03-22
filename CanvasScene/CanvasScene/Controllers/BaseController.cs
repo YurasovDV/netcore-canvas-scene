@@ -6,11 +6,11 @@ namespace CanvasScene.Controllers
 {
     public class BaseController : Controller
     {
-        protected ICircleService CircleService { get; }
+        protected IFiguresService FiguresService { get; }
 
-        public BaseController(ICircleService circleService)
+        public BaseController(IFiguresService figuresService)
         {
-            CircleService = circleService ?? throw new ArgumentNullException(nameof(circleService));
+            FiguresService = figuresService ?? throw new ArgumentNullException(nameof(figuresService));
         }
     }
 }
