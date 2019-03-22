@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using CanvasScene.DAL;
@@ -9,22 +8,23 @@ namespace CanvasScene.AppServices
 {
     public class FiguresService : IFiguresService
     {
-        public FiguresContext DbContext { get; }
+        public IRepository<Figure> Repository { get; }
 
-        public FiguresService(FiguresContext context)
+        public FiguresService(IRepository<Figure> repository)
         {
-            DbContext = context ?? throw new ArgumentNullException(nameof(context));
+            Repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         public async Task<IEnumerable<Figure>> GetFigures()
         {
-            return await DbContext.Figures.ToAsyncEnumerable().ToList();
+           var res = await Repository.GetAll();
+            return res;
         }
 
         public async Task<IEnumerable<Figure>> GetBy(Expression<Func<Figure, bool>> predicate)
         {
-            var list = await DbContext.Figures.Where(predicate).ToAsyncEnumerable().ToList();
-            return list;
+            var res = await Repository.GetBy(predicate);
+            return res;
         }
     }
 }

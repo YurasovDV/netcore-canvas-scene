@@ -17,6 +17,8 @@ namespace CanvasScene
             }, ServiceLifetime.Scoped);
 
             services.Add(new ServiceDescriptor(typeof(IFiguresService), typeof(FiguresService), ServiceLifetime.Scoped));
+
+            services.Add(new ServiceDescriptor(typeof(IRepository<Figure>), typeof(FiguresRepository), ServiceLifetime.Scoped));
         }
     }
 }
