@@ -1,26 +1,32 @@
 
 <div style="width: 900px; height: 500px; margin: 0 auto; ">
 
-  <kendo-grid [data]="figuresViewForGrid" [height]="400">
+  <kendo-grid [data]="figuresViewForGrid" [height]="400" >
     <kendo-grid-column field="id" title="ID" width="40">
     </kendo-grid-column>
-    <kendo-grid-column field="name" title="Название" width="250">
+    <kendo-grid-column field="name" title="Название" width="250" >
     </kendo-grid-column>
     <kendo-grid-column field="width" title="Ширина">
     </kendo-grid-column>
-
     <kendo-grid-column field="height" title="Высота">
     </kendo-grid-column>
-
     <kendo-grid-column field="depth" title="Глубина">
     </kendo-grid-column>
     <kendo-grid-column field="Discontinued" title="Добавлен на сцену" width="200">
       <ng-template kendoGridCellTemplate let-dataItem>
-        <input type="checkbox"  [(ngModel)]="dataItem.inCanvas" (change)="checkValue(dataItem)" />
+        <input type="checkbox"  [(ngModel)]="dataItem.inCanvas" (change)="refreshCanvas(dataItem)" />
       </ng-template>
     </kendo-grid-column>
   </kendo-grid>
+</div>
 
+<div>
+  <fieldset>
+    <input type="text" [(ngModel)]="filter.name" />
+    <input type="number" [(ngModel)]="filter.widthMin" />
+    <input type="number" [(ngModel)]="filter.widthMax" />
+    <button (click)="reloadByFilter()">Применить фильтр</button>
+  </fieldset>
 </div>
 
 <div *ngIf="isDataAvailable" style="margin: 50px; border: 2px solid red;">

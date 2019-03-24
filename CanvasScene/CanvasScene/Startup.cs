@@ -1,9 +1,11 @@
+using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OData;
 
 namespace CanvasScene
 {
@@ -19,6 +21,8 @@ namespace CanvasScene
         public void ConfigureServices(IServiceCollection services)
         {
             new IoC.CompositionRoot().ConfigureServices(services);
+
+            // services.AddOData();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
@@ -48,6 +52,11 @@ namespace CanvasScene
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
+
+                // OData требует Iqueryable, что несколько размывает слои
+                //routes.Select().Expand().Filter().OrderBy().MaxTop(100).Count();
+
+                //routes.MapODataServiceRoute("odata", "odata", GetEdmModel());
             });
 
             app.UseSpa(spa =>
@@ -69,5 +78,12 @@ namespace CanvasScene
                 }
             }
         }
+
+        //private IEdmModel GetEdmModel()
+        //{
+        //    ODataConventionModelBuilder builder = new ODataConventionModelBuilder();
+        //    builder.EntitySet<Figure>("Figures");
+        //    return builder.GetEdmModel();
+        //}
     }
 }

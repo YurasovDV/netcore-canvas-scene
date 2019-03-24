@@ -4,6 +4,7 @@ import { Figure } from '../model/figure';
 import { KonvaFigure } from '../model/konvaFigure';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { GridDataResult } from '@progress/kendo-angular-grid';
+import { FilterParams } from '../model/filterParams';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,11 @@ export class HomeComponent implements OnInit {
 
   public isDataAvailable: boolean = false;
 
-  constructor(private figuresService: FiguresService, private changeDetector: ChangeDetectorRef) { }
+  public filter: FilterParams;
+
+  constructor(private figuresService: FiguresService, private changeDetector: ChangeDetectorRef) {
+    this.filter = new FilterParams();
+  }
 
   ngOnInit(): void {
 
@@ -28,30 +33,51 @@ export class HomeComponent implements OnInit {
       height: 300
     });
 
-    this.figuresService.getAll().subscribe(data => {
-      data.data.forEach(v => { (<Figure>v).inCanvas = false; });
-      this.figuresViewForGrid = data;
-      this.isDataAvailable = true;
-    });
+    this.reloadAll();
   }
 
-  checkValue(figureChanged: Figure) {
-  // обертка игнорирует новые элементы в коллекции, поэтому проще пересоздавать канвас, а не работать именно с изменившейся фигурой
+  private reloadAll() {
+    this.figuresService.getAll().subscribe(gridDataResult => this.fillDataSources(gridDataResult));
+  }
+
+  private reloadByFilter() {
+    this.figuresService.getBy(this.filter).subscribe(gridDataResult => this.fillDataSources(gridDataResult));
+  }
+
+  public fillDataSources(data) {
+    data.data.forEach(v => { (<Figure>v).inCanvas = false; });
+    this.figuresViewForGrid = data;
+
+    if (this.isDataAvailable) {
+      this.refreshCanvas(null);
+    }
+    else {
+      this.isDataAvailable = true;
+    }
+  }
+
+  public refreshCanvas(figureChanged: Figure) {
+    // обертка игнорирует новые элементы в коллекции, поэтому проще пересоздавать канвас, а не работать именно с изменившейся фигурой
     this.clearCanvas();
 
-    this.figuresForCanvas = this.figuresViewForGrid.data.
-      filter(f => (<Figure>f).inCanvas).
-        map((figure, index) => new BehaviorSubject(new KonvaFigure(100 * (index + 1), 100 * (index + 1), 4, (<Figure>figure).height / 2, "red", "red", 4)));
+    this.rebuildCanvasSource();
 
-    this.refreshCanvas()
+    this.showCanvas()
   }
 
-  clearCanvas() {
+  private clearCanvas() {
     this.isDataAvailable = false;
   }
 
-  refreshCanvas() {
+  private rebuildCanvasSource() {
+    this.figuresForCanvas = this.figuresViewForGrid.data.
+      filter(f => (<Figure>f).inCanvas).
+      map((figure, index) => new BehaviorSubject(new KonvaFigure(100 * (index + 1), 100 * (index + 1), 4, (<Figure>figure).height / 2, "red", "red", 4)));
+  }
+
+  private showCanvas() {
     this.changeDetector.detectChanges();
     this.isDataAvailable = true;
   }
+
 }

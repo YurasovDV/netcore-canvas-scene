@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CanvasScene.DAL
@@ -9,6 +7,6 @@ namespace CanvasScene.DAL
     {
         Task<IEnumerable<T>> GetAll();
 
-        Task<IEnumerable<T>> GetBy(Expression<Func<T, bool>> predicate);
+        Task<IEnumerable<T>> GetBy(FilterParams filter);
     }
 }

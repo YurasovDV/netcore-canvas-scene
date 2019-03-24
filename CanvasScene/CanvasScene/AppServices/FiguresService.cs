@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using CanvasScene.DAL;
 
@@ -21,9 +20,9 @@ namespace CanvasScene.AppServices
             return res;
         }
 
-        public async Task<IEnumerable<Figure>> GetBy(Expression<Func<Figure, bool>> predicate)
+        public async Task<IEnumerable<Figure>> GetBy(FilterParams filter)
         {
-            var res = await Repository.GetBy(predicate);
+            var res = await Repository.GetBy(filter);
             return res;
         }
     }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,10 +21,6 @@ namespace CanvasScene.DAL
             return result;
         }
 
-        public virtual async Task<IEnumerable<T>> GetBy(Expression<Func<T, bool>> predicate)
-        {
-            var list = await _dbContext.Set<T>().Where(predicate).ToAsyncEnumerable().ToList();
-            return list;
-        }
+        public abstract Task<IEnumerable<T>> GetBy(FilterParams filter);
     }
 }
