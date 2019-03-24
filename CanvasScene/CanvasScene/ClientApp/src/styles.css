@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+.text-centered {
+text-align: center;
+}
+
+.grid-wrapper {
+  margin: 0 auto;
+}
+
+.canvas-wrapper {
+  margin: 50px;
+  border: 2px solid red;
+}

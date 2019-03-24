@@ -1,7 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Figure } from '../model/figure';
-import { Observable } from 'rxjs';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { map } from 'rxjs/operators/map';
 import { FilterParams } from '../model/filterParams';
@@ -15,13 +14,7 @@ export class FiguresService {
   constructor(private httpClient: HttpClient, @Inject('BASE_URL') baseUrl: string) { this.baseUrl = baseUrl + 'api/v1/figure'; }
 
   getAll() {
-    let authToken = localStorage.getItem('auth_token');
-
-    let httpOptions = {
-      headers: new HttpHeaders()
-    };
-
-    httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${authToken}`);
+    let httpOptions = this.addAuthHeader();
 
     return this.httpClient.get<Figure[]>(this.baseUrl, httpOptions).pipe(
       map(response => (<GridDataResult>{
@@ -33,13 +26,7 @@ export class FiguresService {
 
   getBy(filter: FilterParams) {
     var url = filter.getRequest();
-    let authToken = localStorage.getItem('auth_token');
-
-    let httpOptions = {
-      headers: new HttpHeaders()
-    };
-
-    httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${authToken}`);
+    let httpOptions = this.addAuthHeader();
 
     return this.httpClient.get<Figure[]>(this.baseUrl + url, httpOptions).pipe(
       map(response => (<GridDataResult>{
@@ -48,4 +35,15 @@ export class FiguresService {
       }))
     );
   }
+
+  private addAuthHeader() {
+    let authToken = localStorage.getItem('auth_token');
+    let httpOptions = {
+      headers: new HttpHeaders()
+    };
+    httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${authToken}`);
+    return httpOptions;
+  }
+
+
 }

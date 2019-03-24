@@ -1,35 +1,63 @@
-
-<div style="width: 900px; height: 500px; margin: 0 auto; ">
-
-  <kendo-grid [data]="figuresViewForGrid" [height]="400" >
+<div class="grid-wrapper">
+  <kendo-grid [data]="figuresViewForGrid" [height]="300">
     <kendo-grid-column field="id" title="ID" width="40">
     </kendo-grid-column>
-    <kendo-grid-column field="name" title="Название" width="250" >
+    <kendo-grid-column field="name" title="Название" width="200">
     </kendo-grid-column>
-    <kendo-grid-column field="width" title="Ширина">
+    <kendo-grid-column field="width" title="Ширина" width="150">
     </kendo-grid-column>
-    <kendo-grid-column field="height" title="Высота">
+    <kendo-grid-column field="height" title="Высота" width="150">
     </kendo-grid-column>
-    <kendo-grid-column field="depth" title="Глубина">
+    <kendo-grid-column field="depth" title="Глубина" width="150">
     </kendo-grid-column>
     <kendo-grid-column field="Discontinued" title="Добавлен на сцену" width="200">
       <ng-template kendoGridCellTemplate let-dataItem>
-        <input type="checkbox"  [(ngModel)]="dataItem.inCanvas" (change)="refreshCanvas(dataItem)" />
+        <input type="checkbox" [(ngModel)]="dataItem.inCanvas" (change)="refreshCanvas(dataItem)" />
       </ng-template>
     </kendo-grid-column>
   </kendo-grid>
 </div>
 
-<div>
-  <fieldset>
-    <input type="text" [(ngModel)]="filter.name" />
-    <input type="number" [(ngModel)]="filter.widthMin" />
-    <input type="number" [(ngModel)]="filter.widthMax" />
-    <button (click)="reloadByFilter()">Применить фильтр</button>
-  </fieldset>
+<div class="container">
+  <form class="m-4" >
+    <header>
+      Параметры фильтрации
+    </header>
+    <fieldset class="form-group">
+      <div class="row m-4">
+        <div class="col-2">
+          <label for="name">По названию:</label>
+        </div>
+        <div class="col-9">
+          <input class="form-control" name="name" type="text" [(ngModel)]="filter.name" />
+        </div>
+      </div>
+      <div class="row m-4">
+        <div class="col-2">
+          <label for="widthMin">Ширина от</label>
+        </div>
+        <div class="col-9">
+          <input class="form-control" name="widthMin" type="number" [(ngModel)]="filter.widthMin" />
+        </div>
+      </div>
+      <div class="row m-4">
+        <div class="col-2">
+          <label for="widthMax">Ширина до</label>
+        </div>
+        <div class="col-9">
+          <input class="form-control" name="widthMax" type="number" [(ngModel)]="filter.widthMax" />
+        </div>
+      </div>
+      <div>
+        <button class="btn btn-primary" (click)="reloadByFilter()">Применить фильтр</button>
+      </div>
+    </fieldset>
+  </form>
 </div>
 
-<div *ngIf="isDataAvailable" style="margin: 50px; border: 2px solid red;">
+<h1 *ngIf="!isDataAvailable">Выберите объекты для отображения</h1>
+
+<div *ngIf="isDataAvailable" class="canvas-wrapper">
   <ko-stage #stage [config]="configStage">
     <ko-layer #layer>
       <ko-regular-polygon *ngFor="let figure of figuresForCanvas" [config]="figure"></ko-regular-polygon>

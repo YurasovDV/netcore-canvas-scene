@@ -14,6 +14,8 @@ export class LoginComponent implements OnInit {
 
   private registered: boolean = false;
 
+  private error: string = '';
+
   constructor(private authService: AuthService, private router: Router) {
     this.user = new User('', '');
   }
@@ -22,21 +24,28 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.error = '';
     this.authService.login(this.user).subscribe(
       result => {
         if (result) {
           this.router.navigate(['/']);
         }
-      });
+      },
+      err => this.handleError(err));
   }
 
   register() {
+    this.error = '';
     this.authService.register(this.user).subscribe(
         result => {         
           if (result) {
             this.registered = true;
             this.router.navigate(['/login']);             
-          }
-        });
+        }
+      }, err => this.handleError(err));
+  }
+
+  private handleError(err) {
+    console.log(err); this.error = 'Произошла ошибка'; 
   }
 }

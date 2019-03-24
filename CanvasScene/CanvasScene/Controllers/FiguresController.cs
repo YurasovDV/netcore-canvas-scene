@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using CanvasScene.AppServices;
 using CanvasScene.Entities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,11 +18,6 @@ namespace CanvasScene.Controllers
         [HttpGet]
         public async Task<IEnumerable<Figure>> Get([FromQuery]FilterParams filter)
         {
-
-            var headers = Request.Headers.Select(a => new { a.Key, a.Value }).ToList();
-
-            var authIser = Request.HttpContext.User;
-
             IEnumerable<Figure> result = null;
             if (filter != null && !FilterParams.Empty.Equals(filter))
             {
