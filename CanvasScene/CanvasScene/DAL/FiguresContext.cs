@@ -1,11 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using CanvasScene.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace CanvasScene.DAL
 {
     public class FiguresContext : DbContext
     {
-        public FiguresContext(DbContextOptions options) : base(options)
+        public FiguresContext(DbContextOptions<FiguresContext> options) : base(options)
         {
         }
 

@@ -1,15 +1,13 @@
-using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.OData;
 
 namespace CanvasScene
 {
-    public class Startup
+    public partial class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -21,6 +19,7 @@ namespace CanvasScene
         public void ConfigureServices(IServiceCollection services)
         {
             new IoC.CompositionRoot().ConfigureServices(services);
+            AddAuthentication(services);
 
             // services.AddOData();
 
@@ -32,7 +31,6 @@ namespace CanvasScene
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -85,5 +83,6 @@ namespace CanvasScene
         //    builder.EntitySet<Figure>("Figures");
         //    return builder.GetEdmModel();
         //}
+
     }
 }

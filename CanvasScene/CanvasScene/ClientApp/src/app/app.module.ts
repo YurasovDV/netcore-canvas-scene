@@ -11,6 +11,9 @@ import { GridModule } from '@progress/kendo-angular-grid';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { KonvaModule } from 'ng2-konva';
 import { LoginComponent } from './login/login.component';
+import { AuthGuard } from './authGuard';
+import { AuthService } from './services/auth.service';
+
 
 @NgModule({
   declarations: [
@@ -23,13 +26,14 @@ import { LoginComponent } from './login/login.component';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+      { path: 'login', component: LoginComponent },
     ]),
     GridModule,
     BrowserAnimationsModule,
     KonvaModule
   ],
-  providers: [FiguresService],
+  providers: [FiguresService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

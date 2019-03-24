@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CanvasScene.DAL;
+using CanvasScene.Entities;
 
 namespace CanvasScene.AppServices
 {

@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 import { GridDataResult } from '@progress/kendo-angular-grid';
 import { map } from 'rxjs/operators/map';
 import { FilterParams } from '../model/filterParams';
+import { HttpHeaders } from '@angular/common/http';
+
+
 @Injectable()
 export class FiguresService {
 
@@ -12,7 +15,15 @@ export class FiguresService {
   constructor(private httpClient: HttpClient, @Inject('BASE_URL') baseUrl: string) { this.baseUrl = baseUrl + 'api/v1/figure'; }
 
   getAll() {
-    return this.httpClient.get<Figure[]>(this.baseUrl).pipe(
+    let authToken = localStorage.getItem('auth_token');
+
+    let httpOptions = {
+      headers: new HttpHeaders()
+    };
+
+    httpOptions.headers.append('Authorization', `Bearer ${authToken}`);
+
+    return this.httpClient.get<Figure[]>(this.baseUrl, httpOptions).pipe(
       map(response => (<GridDataResult>{
         data: response,
         total: response.length
@@ -23,7 +34,14 @@ export class FiguresService {
   getBy(filter: FilterParams) {
     var url = filter.getRequest();
 
-    return this.httpClient.get<Figure[]>(this.baseUrl + url).pipe(
+
+    let authToken = localStorage.getItem('auth_token');
+    const httpOptions = {
+      headers: new HttpHeaders()
+    };
+
+    httpOptions.headers.append('Authorization', `Bearer ${authToken}`);
+    return this.httpClient.get<Figure[]>(this.baseUrl + url, httpOptions).pipe(
       map(response => (<GridDataResult>{
         data: response,
         total: response.length

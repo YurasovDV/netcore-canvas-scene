@@ -1,16 +1,20 @@
 ﻿using System;
 using CanvasScene.AppServices;
 using Microsoft.AspNetCore.Mvc;
+using CanvasScene.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace CanvasScene.Controllers
 {
     public class BaseController : Controller
     {
-        protected IFiguresService FiguresService { get; }
+        protected readonly IFiguresService _figuresService;
+        protected readonly UserManager<AppUser> _userManager;
 
-        public BaseController(IFiguresService figuresService)
+        public BaseController(IFiguresService figuresService, UserManager<AppUser> userManager)
         {
-            FiguresService = figuresService ?? throw new ArgumentNullException(nameof(figuresService));
+            _figuresService = figuresService ?? throw new ArgumentNullException(nameof(figuresService));
+            _userManager = userManager ?? throw new ArgumentNullException(nameof(userManager));
         }
     }
 }

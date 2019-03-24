@@ -1,11 +1,12 @@
 <div>
   <form>
     <label for="login">Логин</label>
-    <input type="text" name="login" value="" />
+    <input type="text" name="login" [(ngModel)]="user.login" />
 
     <label for="password">Пароль</label>
-    <input type="password" name="password" value="" />
+    <input type="password" name="password" [(ngModel)]="user.password" />
 
-    <button type="submit">Логин</button>
+    <button type="button" (click)="login()">Войти</button>
+    <button type="button" (click)="register()">Зарегистрироваться</button>
   </form>
 </div>

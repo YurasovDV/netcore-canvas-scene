@@ -1,4 +1,4 @@
-﻿namespace CanvasScene
+﻿namespace CanvasScene.Entities
 {
     public class Figure
     {

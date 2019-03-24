@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CanvasScene.AppServices;
+using CanvasScene.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CanvasScene.Controllers
 {
     [Route("api/v1/[controller]")]
+    [Authorize]
     public class FigureController : BaseController
     {
-        public FigureController(IFiguresService figuresService) : base(figuresService)
+        public FigureController(IFiguresService figuresService, UserManager<AppUser> userManager) : base(figuresService, userManager)
         {
         }
 
@@ -18,12 +22,12 @@ namespace CanvasScene.Controllers
             IEnumerable<Figure> result = null;
             if (filter != null && !FilterParams.Empty.Equals(filter))
             {
-                result = await FiguresService.GetBy(filter);
+                result = await _figuresService.GetBy(filter);
             }
             else
             {
 
-                result = await FiguresService.GetFigures();
+                result = await _figuresService.GetFigures();
             }
             return result;
         }

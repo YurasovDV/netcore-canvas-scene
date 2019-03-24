@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using CanvasScene.DAL.Specifications;
 using System.Linq;
+using CanvasScene.Entities;
 
 namespace CanvasScene.DAL
 {
