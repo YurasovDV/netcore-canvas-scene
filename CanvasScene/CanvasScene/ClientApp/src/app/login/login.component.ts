@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
 
   private user: User;
 
+  private registered: boolean = false;
+
   constructor(private authService: AuthService, private router: Router) {
     this.user = new User('', '');
   }
@@ -32,6 +34,7 @@ export class LoginComponent implements OnInit {
     this.authService.register(this.user).subscribe(
         result => {         
           if (result) {
+            this.registered = true;
             this.router.navigate(['/login']);             
           }
         });

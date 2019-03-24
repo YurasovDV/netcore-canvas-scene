@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CanvasScene.AppServices;
 using CanvasScene.Entities;
@@ -9,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace CanvasScene.Controllers
 {
     [Route("api/v1/[controller]")]
-    [Authorize]
     public class FigureController : BaseController
     {
         public FigureController(IFiguresService figuresService, UserManager<AppUser> userManager) : base(figuresService, userManager)
@@ -19,6 +19,11 @@ namespace CanvasScene.Controllers
         [HttpGet]
         public async Task<IEnumerable<Figure>> Get([FromQuery]FilterParams filter)
         {
+
+            var headers = Request.Headers.Select(a => new { a.Key, a.Value }).ToList();
+
+            var authIser = Request.HttpContext.User;
+
             IEnumerable<Figure> result = null;
             if (filter != null && !FilterParams.Empty.Equals(filter))
             {

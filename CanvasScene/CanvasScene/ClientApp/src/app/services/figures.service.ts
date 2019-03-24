@@ -21,7 +21,7 @@ export class FiguresService {
       headers: new HttpHeaders()
     };
 
-    httpOptions.headers.append('Authorization', `Bearer ${authToken}`);
+    httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${authToken}`);
 
     return this.httpClient.get<Figure[]>(this.baseUrl, httpOptions).pipe(
       map(response => (<GridDataResult>{
@@ -33,14 +33,14 @@ export class FiguresService {
 
   getBy(filter: FilterParams) {
     var url = filter.getRequest();
-
-
     let authToken = localStorage.getItem('auth_token');
-    const httpOptions = {
+
+    let httpOptions = {
       headers: new HttpHeaders()
     };
 
-    httpOptions.headers.append('Authorization', `Bearer ${authToken}`);
+    httpOptions.headers = httpOptions.headers.set('Authorization', `Bearer ${authToken}`);
+
     return this.httpClient.get<Figure[]>(this.baseUrl + url, httpOptions).pipe(
       map(response => (<GridDataResult>{
         data: response,
